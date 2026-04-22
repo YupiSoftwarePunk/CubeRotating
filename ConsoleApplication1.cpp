@@ -29,37 +29,37 @@ void drawFaceNumber(int face) {
     glBegin(GL_LINES);
     float offset = 1.01f;
 
-    if (face == 0) { // 1 (Передняя, +Z)
+    if (face == 0) {
         glVertex3f(0.0f, 0.5f, offset);  glVertex3f(0.0f, -0.5f, offset);
         glVertex3f(-0.2f, 0.3f, offset); glVertex3f(0.0f, 0.5f, offset);
     }
-    else if (face == 1) { // 2 (Правая, +X)
+    else if (face == 1) {
         glVertex3f(offset, 0.5f, -0.2f); glVertex3f(offset, 0.5f, 0.2f);
         glVertex3f(offset, 0.5f, 0.2f);  glVertex3f(offset, 0.0f, 0.2f);
         glVertex3f(offset, 0.0f, 0.2f);  glVertex3f(offset, 0.0f, -0.2f);
         glVertex3f(offset, 0.0f, -0.2f); glVertex3f(offset, -0.5f, -0.2f);
         glVertex3f(offset, -0.5f, -0.2f); glVertex3f(offset, -0.5f, 0.2f);
     }
-    else if (face == 2) { // 3 (Задняя, -Z)
+    else if (face == 2) {
         glVertex3f(0.2f, 0.5f, -offset);  glVertex3f(-0.2f, 0.5f, -offset);
         glVertex3f(-0.2f, 0.5f, -offset); glVertex3f(-0.2f, 0.0f, -offset);
         glVertex3f(0.2f, 0.0f, -offset);  glVertex3f(-0.2f, 0.0f, -offset);
         glVertex3f(-0.2f, 0.0f, -offset); glVertex3f(-0.2f, -0.5f, -offset);
         glVertex3f(0.2f, -0.5f, -offset); glVertex3f(-0.2f, -0.5f, -offset);
     }
-    else if (face == 3) { // 4 (Левая, -X)
+    else if (face == 3) {
         glVertex3f(-offset, 0.5f, -0.2f); glVertex3f(-offset, 0.0f, -0.2f);
         glVertex3f(-offset, 0.0f, -0.2f); glVertex3f(-offset, 0.0f, 0.2f);
         glVertex3f(-offset, 0.5f, 0.2f);  glVertex3f(-offset, -0.5f, 0.2f);
     }
-    else if (face == 4) { // 5 (Верхняя, +Y)
+    else if (face == 4) {
         glVertex3f(-0.2f, offset, -0.2f); glVertex3f(0.2f, offset, -0.2f);
         glVertex3f(-0.2f, offset, -0.2f); glVertex3f(-0.2f, offset, 0.0f);
         glVertex3f(-0.2f, offset, 0.0f);  glVertex3f(0.2f, offset, 0.0f);
         glVertex3f(0.2f, offset, 0.0f);   glVertex3f(0.2f, offset, 0.2f);
         glVertex3f(0.2f, offset, 0.2f);   glVertex3f(-0.2f, offset, 0.2f);
     }
-    else if (face == 5) { // 6 (Нижняя, -Y)
+    else if (face == 5) {
         glVertex3f(0.2f, -offset, -0.2f); glVertex3f(-0.2f, -offset, -0.2f);
         glVertex3f(-0.2f, -offset, -0.2f); glVertex3f(-0.2f, -offset, 0.2f);
         glVertex3f(-0.2f, -offset, 0.2f);  glVertex3f(0.2f, -offset, 0.2f);
@@ -73,14 +73,14 @@ void drawFaceNumber(int face) {
 
 void drawCube() {
     GLfloat vertices[8][3] = {
-        {-1.0f, -1.0f,  1.0f}, // 0 - передняя нижняя левая
-        { 1.0f, -1.0f,  1.0f}, // 1 - передняя нижняя правая
-        { 1.0f,  1.0f,  1.0f}, // 2 - передняя верхняя правая
-        {-1.0f,  1.0f,  1.0f}, // 3 - передняя верхняя левая
-        {-1.0f, -1.0f, -1.0f}, // 4 - задняя нижняя левая
-        { 1.0f, -1.0f, -1.0f}, // 5 - задняя нижняя правая
-        { 1.0f,  1.0f, -1.0f}, // 6 - задняя верхняя правая
-        {-1.0f,  1.0f, -1.0f}  // 7 - задняя верхняя левая
+        {-1.0f, -1.0f,  1.0f},
+        { 1.0f, -1.0f,  1.0f},
+        { 1.0f,  1.0f,  1.0f},
+        {-1.0f,  1.0f,  1.0f},
+        {-1.0f, -1.0f, -1.0f},
+        { 1.0f, -1.0f, -1.0f},
+        { 1.0f,  1.0f, -1.0f},
+        {-1.0f,  1.0f, -1.0f}
     };
 
     GLint faces[6][4] = {
@@ -122,15 +122,14 @@ void drawCube() {
                 glTranslatef(-1.0f, -1.0f, 0.0f); glRotatef(currentUnfoldAngle, 0, 0, 1); glTranslatef(1.0f, 1.0f, 0.0f);
             }
             else if (face == 4) {
-                glTranslatef(0.0f, -1.0f, 1.0f); glRotatef(currentUnfoldAngle, 1, 0, 0); glTranslatef(0.0f, 1.0f, -1.0f); // Движение вместе с передней
-                glTranslatef(0.0f, 1.0f, 1.0f); glRotatef(currentUnfoldAngle, 1, 0, 0); glTranslatef(0.0f, -1.0f, -1.0f);  // Собственное откидывание
+                glTranslatef(0.0f, -1.0f, 1.0f); glRotatef(currentUnfoldAngle, 1, 0, 0); glTranslatef(0.0f, 1.0f, -1.0f);
+                glTranslatef(0.0f, 1.0f, 1.0f); glRotatef(currentUnfoldAngle, 1, 0, 0); glTranslatef(0.0f, -1.0f, -1.0f);
             }
         }
 
         glBegin(GL_QUADS);
         glNormal3fv(normals[face]);
 
-        // Цвета граней
         float r = (sin(rotation.x * 0.05f) + 1) / 2;
         float g = (sin(rotation.y * 0.05f) + 1) / 2;
         float b = (sin(rotation.z * 0.05f) + 1) / 2;
@@ -197,7 +196,6 @@ int main() {
     while (running) {
         float deltaTime = clock.restart().asSeconds();
 
-        // Анимация развертки
         if (isUnfolded && currentUnfoldAngle < 90.0f) {
             currentUnfoldAngle += 100.0f * deltaTime;
             if (currentUnfoldAngle > 90.0f) currentUnfoldAngle = 90.0f;
@@ -209,10 +207,10 @@ int main() {
 
         float currentSpeed = rotationSpeed;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RShift)) {
-            currentSpeed *= 3.0f; // Ускорение при Shift
+            currentSpeed *= 3.0f;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RControl)) {
-            currentSpeed *= 0.3f; // Замедление при Ctrl
+            currentSpeed *= 0.3f;
         }
 
         while (const std::optional event = window.pollEvent()) {
@@ -232,28 +230,28 @@ int main() {
             else if (event->is<sf::Event::KeyPressed>()) {
                 if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
                     if (keyPressed->scancode == sf::Keyboard::Scancode::C) {
-                        isUnfolded = !isUnfolded; // С - Развертка куба
+                        isUnfolded = !isUnfolded;
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::R) {
-                        zoomFactor = std::max(0.1f, zoomFactor - 0.1f); // R - Приблизить
+                        zoomFactor = std::max(0.1f, zoomFactor - 0.1f);
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::L) {
-                        zoomFactor += 0.1f; // L - Отдалить
+                        zoomFactor += 0.1f;
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::Space) {
-                        isFilled = !isFilled; // Пробел - прозрачность/заливка
+                        isFilled = !isFilled;
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::T) {
-                        autoRotate = !autoRotate; // T - Автоповорот 
+                        autoRotate = !autoRotate;
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::Backspace) {
-                        rotation.x = 0; rotation.y = 0; rotation.z = 0; // Backspace - сброс поворота
+                        rotation.x = 0; rotation.y = 0; rotation.z = 0;
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::Equal) {
-                        rotationSpeed += 1.0f; // Базовое ускорение на "="
+                        rotationSpeed += 1.0f;
                     }
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::Hyphen) {
-                        rotationSpeed = std::max(1.0f, rotationSpeed - 1.0f); // Базовое замедление на "-"
+                        rotationSpeed = std::max(1.0f, rotationSpeed - 1.0f);
                     }
                 }
             }
