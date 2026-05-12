@@ -338,7 +338,6 @@ int main() {
         drawCube();
 
         window.display();
-        sf::sleep(sf::milliseconds(10));
     }
 
     return 0;
