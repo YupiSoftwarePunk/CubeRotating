@@ -5,6 +5,16 @@
 #include <cmath>
 #include <algorithm>
 
+struct Physics {
+    sf::Vector3f position = { 0.0f, 5.0f, 0.0f };
+    sf::Vector3f velocity = { 0.0f, 0.0f, 0.0f };
+    sf::Vector3f angularVelocity = { 150.0f, 100.0f, 50.0f };
+};
+
+Physics cubePhys;
+const float gravity = -9.81f;
+const float floorLevel = -2.0f;
+
 struct Rotation {
     float x = 0.0f;
     float y = 0.0f;
@@ -196,6 +206,26 @@ int main() {
     while (running) {
         float deltaTime = clock.restart().asSeconds();
 
+        cubePhys.velocity.y += gravity * deltaTime;
+
+        cubePhys.position += cubePhys.velocity * deltaTime;
+
+        rotation.x += cubePhys.angularVelocity.x * deltaTime;
+        rotation.y += cubePhys.angularVelocity.y * deltaTime;
+        rotation.z += cubePhys.angularVelocity.z * deltaTime;
+
+        if (cubePhys.position.y < floorLevel) {
+            cubePhys.position.y = floorLevel;
+            cubePhys.velocity.y = -cubePhys.velocity.y * 0.5f;
+
+            cubePhys.angularVelocity *= 0.8f;
+        }
+
+        float damping = (cubePhys.position.y <= floorLevel + 0.01f) ? 0.95f : 0.995f;
+        cubePhys.angularVelocity.x *= std::pow(damping, deltaTime * 100);
+        cubePhys.angularVelocity.y *= std::pow(damping, deltaTime * 100);
+        cubePhys.angularVelocity.z *= std::pow(damping, deltaTime * 100);
+
         if (isUnfolded && currentUnfoldAngle < 90.0f) {
             currentUnfoldAngle += 100.0f * deltaTime;
             if (currentUnfoldAngle > 90.0f) currentUnfoldAngle = 90.0f;
@@ -253,6 +283,14 @@ int main() {
                     else if (keyPressed->scancode == sf::Keyboard::Scancode::Hyphen) {
                         rotationSpeed = std::max(1.0f, rotationSpeed - 1.0f);
                     }
+                    else if (keyPressed->scancode == sf::Keyboard::Scancode::B) {
+                        cubePhys.position = { 0.0f, 10.0f, 0.0f };
+                        cubePhys.velocity = { 0.0f, 0.0f, 0.0f };
+                        cubePhys.angularVelocity = { (float)(rand() % 500), (float)(rand() % 500), (float)(rand() % 500) };
+                    }
+                    else if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
+                        running = false;
+                    }
                 }
             }
         }
@@ -290,6 +328,8 @@ int main() {
         gluLookAt(4.0 * zoomFactor, 3.0 * zoomFactor, 5.0 * zoomFactor,
             0.0, 0.0, 0.0,
             0.0, 1.0, 0.0);
+
+        glTranslatef(cubePhys.position.x, cubePhys.position.y, cubePhys.position.z);
 
         glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
         glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
